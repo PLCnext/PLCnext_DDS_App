@@ -16,7 +16,7 @@ This project aims to supply, over time, examples and best practices of PLCnext T
 
 |\#| Topic 
 | ----- | ------
-|[01](DDS_App_Examples/DDS_PubSub/) [DDS_PubSub Example](DDS_App_Examples/DDS_PubSub/README.md)| This example shows the communication between DDS Publisher and DDS Subscriber running on two PLCnext targets.
+|[01](DDS_App_Examples/DDS_RoundTrip/) [DDS_RoundTrip Example](DDS_App_Examples/DDS_RoundTrip/README.md)| This example shows the communication between DDS Publisher and DDS Subscriber running on two PLCnext targets.
 
 ## Getting started
 

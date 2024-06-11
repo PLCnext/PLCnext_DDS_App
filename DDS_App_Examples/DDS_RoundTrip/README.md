@@ -1,4 +1,4 @@
-# PLCnext DDS-Roundtrip Sample Application
+# PLCnext DDS-DDS_RoundTrip Sample Application
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Web](https://img.shields.io/badge/PLCnext-Website-blue.svg)](https://www.phoenixcontact.com/plcnext)
@@ -7,9 +7,8 @@
 
 ## Introduction
 
-The roundtrip sample application allows you to measure the performance of dds protocol on two PLCnext controllers.
+The DDS_RoundTrip sample application allows you to measure the performance of the DDS protocol on two PLCnext controllers and visualize it via eHMI.
 
-Using a eHMI visualization provided via the embedded web server, the monitoring of performance measurements will be showed.
 
 **The following diagram shows the software architecture:**
 
@@ -38,7 +37,7 @@ Please prepare your PLCnext Controls as follows:
 1. Reset your PLC's. For this, push the reset button during the boot process until RUN and FAIL LED light up. </br> DO NOT PRESS THE RESET BUTTON FOR MORE THAN 20 SECONDS.
 2. Set on AXC F 3152 for LAN 1 interface the IP address : `192.168.1.11`. For this, connect AXC F 3152 controller via LAN 2 interface to your PC and enter the following URL in web browser: https://192.168.2.10/wbm
 3. Download the [PLCnextEngineer demo projects](./PLCnEngProj) from this repository. You can open it with PLCnext Engineer 2024.0.2 LTS.
-4. Write/send the demo project to the AXC F 2152 and AXC F 3152.
+4. Write and start the demo project to the AXC F 2152 and AXC F 3152.
     - For AXC F 2152, please use: DDS_RoundTrip_AXCF2152.pcwex
     - For AXC F 3152, please use: DDS_RoundTrip_AXCF3152.pcwex
 5. Connect the LAN 1 interface of AXC F 3152 controller to AXC F 2152 via ethernet cable.
@@ -49,8 +48,8 @@ Please prepare your PLCnext Controls as follows:
 
 **For DDS™ app:**
 1. Download the DDS™ app from the PLCnext Store.
-    - For AXC F 2152, please download: [DDS™ protocol for ARM] (https://www.plcnextstore.com/permalinks/apps/latest/60002172000843)
-    - For AXC F 3152, please download: [DDS™ protocol for AXC F 3152] (https://www.plcnextstore.com/permalinks/apps/latest/60002172000842)
+    - For AXC F 2152, please download: [DDS™ protocol for ARM](https://www.plcnextstore.com/permalinks/apps/latest/60002172000843)
+    - For AXC F 3152, please download: [DDS™ protocol for AXC F 3152](https://www.plcnextstore.com/permalinks/apps/latest/60002172000842)
 2. Now open the Web-based Management (WBM).
     - For AXC F 2152, please enter the following URL in web browser: https://192.168.1.10/wbm
     - For AXC F 3152, please enter the following URL in web browser: https://192.168.1.11/wbm
@@ -181,11 +180,11 @@ Please prepare your PLCnext Controls as follows:
 
     - For AXC F 2152:
 
-![eHMI_AXCF2152](/images/AXCF2152.JPG)
+![eHMI_AXCF2152](/images/AXCF2152.png)
 
     - For AXC F 3152:
 
-![eHMI_AXCF3152](/images/AXCF3152.JPG)
+![eHMI_AXCF3152](/images/AXCF3152.png)
 
 
 ## Contributing
