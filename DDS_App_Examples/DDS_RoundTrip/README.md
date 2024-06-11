@@ -1,4 +1,4 @@
-# PLCnext DDS-DDS_RoundTrip Sample Application
+# PLCnext DDS_RoundTrip Sample Application
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Web](https://img.shields.io/badge/PLCnext-Website-blue.svg)](https://www.phoenixcontact.com/plcnext)
@@ -51,8 +51,8 @@ Please prepare your PLCnext Controls as follows:
     - For AXC F 2152, please download: [DDS™ protocol for ARM](https://www.plcnextstore.com/permalinks/apps/latest/60002172000843)
     - For AXC F 3152, please download: [DDS™ protocol for AXC F 3152](https://www.plcnextstore.com/permalinks/apps/latest/60002172000842)
 2. Now open the Web-based Management (WBM).
-    - For AXC F 2152, please enter the following URL in web browser: https://192.168.1.10/wbm
-    - For AXC F 3152, please enter the following URL in web browser: https://192.168.1.11/wbm
+    - For AXC F 2152, enter the following URL in web browser: https://192.168.1.10/wbm
+    - For AXC F 3152, enter the following URL in web browser: https://192.168.1.11/wbm
 3. Install the DDS™ app in the WBM section "PLCnext Apps" > "Install app".
 4. Start the app after installation "PLCnext Apps" > "Start". *Please note:* The start process needs the PLC reboot and takes around 2-3 minutes. If you can access the WBM page again, the software is almost ready -> see next step.
 5. Create a WinSCP session, copy the`/opt/plcnext/apps/XXXXXXXXX/conf/example.dds.config` into the directory `/opt/plcnext/appshome/data/XXXXX` and rename it to `dds.config`.
@@ -180,11 +180,12 @@ Please prepare your PLCnext Controls as follows:
 
     - For AXC F 2152:
 
-![eHMI_AXCF2152](/images/AXCF2152.png)
+![eHMI_AXCF2152](./images/AXCF2152.png)
+
 
     - For AXC F 3152:
 
-![eHMI_AXCF3152](/images/AXCF3152.png)
+![eHMI_AXCF3152](./images/AXCF3152.png)
 
 
 ## Contributing
