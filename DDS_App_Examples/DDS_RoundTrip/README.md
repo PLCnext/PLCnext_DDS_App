@@ -9,11 +9,11 @@
 
 The DDS_RoundTrip sample contains two application and allows you to measure the cycle time of the DDS roundtrip message on two PLCnext controllers and visualize it via eHMI. It can be divided into the following three parts:
 
-1.	The first application runs on an AXC F 2152 controller and generates a timestamp/ticks counter that is assigned to the variable "udiTicksOut" and published using a "Ping" publisher.
+1.	The first application runs on an AXC F 2152 controller and generates a timestamp/ticks_counter that is assigned to the variable "udiTicksOut" and published using a "Ping" publisher.
 
 2.	The second application, which runs on an AXC F 3152 controller, subscribes to this as a "udiTicksIn" variable using a "Ping" subscriber. The application assigns the variable "udiTicksIn" to the variable "udiTicksOut" and publishes it using a "Pong" publisher.
 
-3.	The first application on the AXC F 2152 controller subscribes to this variable as "udiTicksIn" using a "Pong" subscriber and calculates the difference between the current "udiTicksOut" and the received "udiTicksIn" timestamp. The cycle time of the dds message is calculated based on the difference between the two timestamps.
+3.	The first application on the AXC F 2152 controller subscribes to this variable as "udiTicksIn" using a "Pong" subscriber and calculates the difference between the current "udiTicksOut" and the received "udiTicksIn" variables/timestamps. The cycle time of the dds message is calculated based on the difference between the two timestamps.
 
 
 **The following diagram shows the software architecture:**
@@ -183,12 +183,10 @@ Please prepare your PLCnext Controls as follows:
 
 9. Press the "Reset" button and monitor the round trip time of the DDS data transmission between two PLCnext controllers:
 
-    - For AXC F 2152:
 	
 ![Alt-Text](./images/AXCF2152.png)
 
 
-    - For AXC F 3152:
 	
 ![Alt-Text](./images/AXCF3152.png)
 
