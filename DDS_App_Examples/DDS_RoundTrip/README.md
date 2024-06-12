@@ -7,7 +7,13 @@
 
 ## Introduction
 
-The DDS_RoundTrip sample application allows you to measure the performance of the DDS protocol on two PLCnext controllers and visualize it via eHMI.
+The DDS_RoundTrip sample contains two application and allows you to measure the cycle time of the DDS roundtrip message on two PLCnext controllers and visualize it via eHMI. It can be divided into the following three parts:
+
+1.	The first application runs on an AXC F 2152 controller and generates a timestamp/ticks counter that is assigned to the variable "udiTicksOut" and published using a "Ping" publisher.
+
+2.	The second application, which runs on an AXC F 3152 controller, subscribes to this as a "udiTicksIn" variable using a "Ping" subscriber. The application assigns the variable "udiTicksIn" to the variable "udiTicksOut" and publishes it using a "Pong" publisher.
+
+3.	The first application on the AXC F 2152 controller subscribes to this variable as "udiTicksIn" using a "Pong" subscriber and calculates the difference between the current "udiTicksOut" and the received "udiTicksIn" timestamp. The cycle time of the dds message is calculated based on the difference between the two timestamps.
 
 
 **The following diagram shows the software architecture:**
@@ -35,7 +41,7 @@ Please prepare your PLCnext Controls as follows:
 
 **First steps:**
 1. Reset your PLC's. For this, push the reset button during the boot process until RUN and FAIL LED light up. </br> DO NOT PRESS THE RESET BUTTON FOR MORE THAN 20 SECONDS.
-2. Set on AXC F 3152 for LAN 1 interface the IP address : `192.168.1.11`. For this, connect AXC F 3152 controller via LAN 2 interface to your PC and enter the following URL in web browser: https://192.168.2.10/wbm
+2. Set on AXC F 3152 for LAN 1 interface the IP address : `192.168.1.11` in ["Configuration" > "Network"](https://www.plcnext.help/te/WBM/Configuration_Network.htm). For this, connect AXC F 3152 controller via LAN 2 interface to your PC and enter the following URL in web browser: https://192.168.2.10/wbm
 3. Download the [PLCnextEngineer demo projects](./PLCnEngProj) from this repository. You can open it with PLCnext Engineer 2024.0.2 LTS.
 4. Write and start the demo project to the AXC F 2152 and AXC F 3152.
     - For AXC F 2152, please use: DDS_RoundTrip_AXCF2152.pcwex
@@ -54,8 +60,7 @@ Please prepare your PLCnext Controls as follows:
     - For AXC F 2152, enter the following URL in web browser: https://192.168.1.10/wbm
     - For AXC F 3152, enter the following URL in web browser: https://192.168.1.11/wbm
 3. Install the DDS™ app in the WBM section "PLCnext Apps" > "Install app".
-4. Start the app after installation "PLCnext Apps" > "Start". *Please note:* The start process needs the PLC reboot and takes around 2-3 minutes. If you can access the WBM page again, the software is almost ready -> see next step.
-5. Create a WinSCP session, copy the`/opt/plcnext/apps/XXXXXXXXX/conf/example.dds.config` into the directory `/opt/plcnext/appshome/data/XXXXX` and rename it to `dds.config`.
+4. Start the app after installation and copy the `/opt/plcnext/apps/APP_ID_XXX/example.dds.config` into the directory `/opt/plcnext/appshome/data/APP_ID_XXX` and rename it to `dds.config`.
     - For AXC F 2152, please copy and rename the `/opt/plcnext/apps/60002172000843/conf/example.dds.config` to `/opt/plcnext/appshome/data/60002172000843/dds.config`. You can also proceed the steps via secure shell session:
 	```bash
 	   ssh admin@192.168.1.10
@@ -145,7 +150,7 @@ Please prepare your PLCnext Controls as follows:
 				<Sampling mode="cyclic" duration="10ms"/>
 				<Topic name="MyTopic">
 				   <!--Variable>Arp.Plc.Eclr/My.Outport.Variable</Variable-->
-			   <Variable>Arp.Plc.Eclr/Main_1.udiTicksOut</Variable>
+				   <Variable>Arp.Plc.Eclr/Main_1.udiTicksOut</Variable>
 				   <Variable>Arp.Plc.Eclr/Main_1.Out_Arr_Byte_2044</Variable>
 				</Topic>
 			 </Writer>
@@ -179,13 +184,13 @@ Please prepare your PLCnext Controls as follows:
 9. Press the "Reset" button and monitor the round trip time of the DDS data transmission between two PLCnext controllers:
 
     - For AXC F 2152:
-
-![eHMI_AXCF2152](./images/AXCF2152.png)
+	
+![Alt-Text](./images/AXCF2152.png)
 
 
     - For AXC F 3152:
-
-![eHMI_AXCF3152](./images/AXCF3152.png)
+	
+![Alt-Text](./images/AXCF3152.png)
 
 
 ## Contributing
