@@ -7,13 +7,56 @@
 
 ## Introduction
 
-The DDS_RoundTrip sample contains two application and allows you to measure the cycle time of the DDS roundtrip message on two PLCnext controllers and visualize it via eHMI. It can be divided into the following three parts:
+The DDS_RoundTrip example measures the roundtrip duration when sending and receiving the messages on AXC F 2152 controller. The AXC F 3152 controller is used as the communication partner.
 
-1.	The first application runs on an AXC F 2152 controller and generates a timestamp/ticks_counter that is assigned to the variable "udiTicksOut" and published using a "Ping" publisher.
 
-2.	The second application, which runs on an AXC F 3152 controller, subscribes to this as a "udiTicksIn" variable using a "Ping" subscriber. The application assigns the variable "udiTicksIn" to the variable "udiTicksOut" and publishes it using a "Pong" publisher.
+## Design
 
-3.	The first application on the AXC F 2152 controller subscribes to this variable as "udiTicksIn" using a "Pong" subscriber and calculates the difference between the current "udiTicksOut" and the received "udiTicksIn" variables/timestamps. The cycle time of the dds message is calculated based on the difference between the two timestamps.
+The DDS_RoundTrip example consists of two applications/cotrollers:
+
+AXC F 2152: Sends a message to AXC F 3152 and waits for its return.
+
+AXC F 3152: Waits for messages from AXC F 2152 and sends the same message back.
+
+
+## Scenario
+
+AXC F 2152 controller sends a message by the “ping” partition(Publisher), which the “ping” partition (Subscriber) on AXC F 3152 controller is waiting for. 
+AXC F 3152 controller sends the same message back by the “pong” partition (Publisher), which the “pong” partition (Subscriber) the AXC F 2152 is waiting for. This sequence is repeated cyclically.
+
+
+## Result
+
+The measurement application running on the AXC F 2152 controller displays the value of the cyclic round trip time in [ms] via eHMI. 
+The application also calculates min/max statistics on cyclic roundtrip measurements.
+
+
+## Dependencies and Configuration
+
+The measured round trip time depends on:
+
+ESM cyclic task configuration and program duration time on AXC F 2152 controller (message sending): Configurable in PLCnEng Project (Tasks -> cycleTime).
+
+ESM cyclic task configuration and program duration time on AXC F 3152 controller (message mirroring, must be twice as fast as the message sender): Configurable in PLCnEng Project (Tasks -> cycleTime).
+
+ESM cyclic task configuration for DDS-App running on AXC F 2152 and AXC F 3152 controllers: Configurable in dds.esm.config file (Tasks -> cycleTime).
+
+Publisher WriteAccess cycle time: Configurable in dds.config file (Publisher -> Writer -> duration).
+
+Subscriber ReadAccess cycle time: Configurable in dds.config file (Subscriber -> Writer -> duration).
+
+Network delay time: depends on network performance.
+
+
+## Implementation
+
+contains two applications and allows you to measure the cycle time of the DDS roundtrip message and visualize it via eHMI. It can be divided into the following three parts:
+
+1.	The first application running on an AXC F 2152 controller calculates the counter value and writes it to the byte array “Out_Arr_Byte_2044”, additionally it generates a timestamp/ticks_counter which is assigned to the variable “udiTicksOut”. Then the output variables “Out_Arr_Byte_2044” and “udiTicksOut” are published using a “Ping” publisher.
+
+2.	The second application, which runs on an AXC F 3152 controller, subscribes the values from AXC F 2152 controller as a "In_Arr_Byte_2044" and "udiTicksIn" variables using a "Ping" subscriber. The application assigns the array "In_Arr_Byte_2044" to "Out_Arr_Byte_2044" and the variable "udiTicksIn" to the variable "udiTicksOut" and publishes them using a "Pong" publisher.
+
+3.	The first application on the AXC F 2152 controller subscribes the values from AXC F 3152 controller as "In_Arr_Byte_2044" and "udiTicksIn" variables using a "Pong" subscriber and calculates the difference between the current "udiTicksOut" and the received "udiTicksIn" variables/timestamps. The cycle time of the dds message is calculated based on the difference between the two timestamps.
 
 
 **The following diagram shows the software architecture:**
@@ -33,20 +76,20 @@ The DDS_RoundTrip sample contains two application and allows you to measure the 
 The following software must be installed on the PC:
 - WinSCP
 - HTML5 capable browser
-- PLCnext Engineer version 2024.0.2 LTS or later
+- PLCnext Engineer version 2024.0.3 LTS or later
 
 ### Installation preparation
 
 Please prepare your PLCnext Controls as follows:
 
 **First steps:**
-1. Reset your PLC's. For this, push the reset button during the boot process until RUN and FAIL LED light up. </br> DO NOT PRESS THE RESET BUTTON FOR MORE THAN 20 SECONDS.
-2. Set on AXC F 3152 for LAN 1 interface the IP address : `192.168.1.11` in ["Configuration" > "Network"](https://www.plcnext.help/te/WBM/Configuration_Network.htm). For this, connect AXC F 3152 controller via LAN 2 interface to your PC and enter the following URL in web browser: https://192.168.2.10/wbm
-3. Download the [PLCnextEngineer demo projects](./PLCnEngProj) from this repository. You can open it with PLCnext Engineer 2024.0.2 LTS.
-4. Write and start the demo project to the AXC F 2152 and AXC F 3152.
+1. Configure the Network Adapter on Microsoft Windows operating system for access to the PLCnext controllers in the range 192.168.1.x/24 (e.g. IP: 192.168.1.100 , Subnet: 255.255.255.0).
+2. Set on AXC F 3152 for LAN 1 interface the IP address : `192.168.1.11` as decribed/showed in ["Configuration" > "Network"](https://www.plcnext.help/te/WBM/Configuration_Network.htm). For this, connect AXC F 3152 controller via LAN 1 interface to your PC and enter the following URL in web browser: https://192.168.1.10/wbm
+3. Disconnect the AXC F 3152 LAN 1 interface from your PC and connect it to the LAN 1 interface of the AXC F 2152 controller. Then connect the second port of AXC F 2152  LAN 1 interface to your PC.
+4. Download the two [PLCnextEngineer demo projects](./PLCnEngProj) for AXC F 2152 and AXC F 3152 controllers from this repository. You can open it with PLCnext Engineer 2024.0.3 LTS.
+5. Write and start the demo project to the AXC F 2152 and AXC F 3152.
     - For AXC F 2152, please use: DDS_RoundTrip_AXCF2152.pcwex
     - For AXC F 3152, please use: DDS_RoundTrip_AXCF3152.pcwex
-5. Connect the LAN 1 interface of AXC F 3152 controller to AXC F 2152 via ethernet cable.
 
 **The following picture shows the hardware architecture:**
 
@@ -181,7 +224,7 @@ Please prepare your PLCnext Controls as follows:
     - For AXC F 2152, the eHMI-Site can be access within a web browser using the URL: https://192.168.1.10/ehmi/hmiapp.html
     - For AXC F 3152, the eHMI-Site can be access within a web browser using the URL: https://192.168.1.11/ehmi/hmiapp.html
 
-9. Press the "Reset" button and monitor the round trip time of the DDS data transmission between two PLCnext controllers:
+9. At the eHMI page press the „Reset“ button and monitor the round trip time of the DDS data transmission between two PLCnext controllers:
 
 	
 ![Alt-Text](./images/AXCF2152.png)
