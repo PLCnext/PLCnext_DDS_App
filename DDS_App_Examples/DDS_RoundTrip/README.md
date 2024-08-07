@@ -29,10 +29,10 @@ The publisher and subscriber partitions contain the configured DDS-Topic “MyTo
 - In_Arr_Byte_2044 (2044 Bytes)
 
 Please Note: 
-Each topic‘s maximum message length is 2048 bytes. If less user data is configured, only the configured amount will be transferred. 
-If the maximum amount of 2048 bytes is exceeded, a notification and log message will be published and the specific Reader or Writer will not start.
-If more than 2048 bytes need to be transferred (number of bytes consumed by the variables), configure additional partitions. A maximum of 64 partitions are allowed. 
-The possible number of partitions is limited by the respective controller performance. You should therefore carry out your own tests to ensure reliable communication before going into productive operation.
+- Each topic‘s maximum message length is 2048 bytes. If less user data is configured, only the configured amount will be transferred. 
+- If the maximum amount of 2048 bytes is exceeded, a notification and log message will be published and the specific Reader or Writer will not start.
+- If more than 2048 bytes need to be transferred (number of bytes consumed by the variables), configure additional partitions. A maximum of 64 partitions are allowed. 
+- The possible number of partitions is limited by the respective controller performance. You should therefore carry out your own tests to ensure reliable communication before going into productive operation.
 
 
 ## Result
