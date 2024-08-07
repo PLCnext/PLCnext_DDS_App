@@ -7,7 +7,7 @@
 
 ## Introduction
 
-The DDS_RoundTrip example measures the roundtrip duration when sending and receiving the messages on AXC F 2152 controller. The AXC F 3152 controller is used as the communication partner.
+The DDS_RoundTrip example measures the roundtrip duration when sending and receiving the DDS messages between two PLCnext controllers.
 
 
 ## Design
