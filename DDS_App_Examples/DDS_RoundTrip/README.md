@@ -212,19 +212,24 @@ Please prepare your PLCnext Controls as follows:
 
 	</DdsConfigurationDocument>
 	```
-	
-7. Restart the both PLCs, e.g. by switching off and switching on the power supply or restart the plcnext process via following command line:
+
+7. To reduce the CPU Load on the AXC F 2152 controller, increase the "cycleTime" of "App.Dds.Task" from 1000000µs to 5000000µs:
+
+	- Open the `/opt/plcnext/appshome/data/60002172000843/dds.esm.config` and configure the "cycleTime" to 5000000.
+	- Save the file `dds.esm.config` and accept the “permissions” error (the file is saved despite the “permissions” error, this is a know behavior)
+   
+8. Restart the both PLCs, e.g. by switching off and switching on the power supply or restart the plcnext process via following command line:
 
    ```bash
    sudo /etc/init.d/plcnext restart
    ```
    
-8. Give the plcnext process a short time to start the application, after this, the project installation is finished and you can access and use the visualization in the web browser:
+9. Give the plcnext process a short time to start the application, after this, the project installation is finished and you can access and use the visualization in the web browser:
 
     - For AXC F 2152, the eHMI-Site can be access within a web browser using the URL: https://192.168.1.10/ehmi/hmiapp.html
     - For AXC F 3152, the eHMI-Site can be access within a web browser using the URL: https://192.168.1.11/ehmi/hmiapp.html
 
-9. At the eHMI page press the „Reset“ button and monitor the round trip time of the DDS data transmission between two PLCnext controllers:
+10. At the eHMI page press the „Reset“ button and monitor the round trip time of the DDS data transmission between two PLCnext controllers:
 
 	
 ![Alt-Text](./images/AXCF2152.png)
