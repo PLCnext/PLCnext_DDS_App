@@ -24,11 +24,21 @@ AXC F 3152: Waits for messages from AXC F 2152 and sends the same message back.
 AXC F 2152 controller sends a message by the “ping” partition(Publisher), which the “ping” partition (Subscriber) on AXC F 3152 controller is waiting for. 
 AXC F 3152 controller sends the same message back by the “pong” partition (Publisher), which the “pong” partition (Subscriber) the AXC F 2152 is waiting for. This sequence is repeated cyclically.
 
+The publisher and subscriber partitions contain the configured DDS-Topic “MyTopic” with a maximum length of 2048 bytes. It is used to transfer two variables:
+- udiTicksIn (4 Bytes)
+- In_Arr_Byte_2044 (2044 Bytes)
+
+Please Note: 
+Each topic‘s maximum message length is 2048 bytes. If less user data is configured, only the configured amount will be transferred. 
+If the maximum amount of 2048 bytes is exceeded, a notification and log message will be published and the specific Reader or Writer will not start.
+If more than 2048 bytes need to be transferred (number of bytes consumed by the variables), configure additional partitions. A maximum of 64 partitions are allowed. 
+The possible number of partitions is limited by the respective controller performance. You should therefore carry out your own tests to ensure reliable communication before going into productive operation.
+
 
 ## Result
 
-The measurement application running on the AXC F 2152 controller displays the value of the cyclic round trip time in [ms] via eHMI. 
-The application also calculates min/max statistics on cyclic roundtrip measurements.
+The measurement application running on the AXC F 2152 controller displays the value of the cyclic round trip time in [µs] via eHMI. The application also calculates min/max statistics on cyclic roundtrip measurements.
+The AXC F 3152 controller functions as a communication partner. The running application calculates the round trip time between two received DDS-telegrams and displays the mesurements with min/max statistics via eHMI. 
 
 
 ## Dependencies and Configuration
@@ -213,7 +223,7 @@ Please prepare your PLCnext Controls as follows:
 	</DdsConfigurationDocument>
 	```
 
-7. To reduce the CPU Load on the AXC F 2152 controller, increase the "cycleTime" of "App.Dds.Task" from 1000000µs to 5000000µs:
+7. To reduce the CPU Load on the AXC F 2152 controller, increase the "cycleTime" of "App.Dds.Task" from 1000000ns to 5000000ns:
 
 	- Open the `/opt/plcnext/appshome/data/60002172000843/dds.esm.config` and configure the "cycleTime" to 5000000.
 	- Save the file `dds.esm.config` and accept the “permissions” error (the file is saved despite the “permissions” error, this is a know behavior)
